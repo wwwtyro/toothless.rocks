@@ -1,21 +1,32 @@
 body {
     margin: 0px;
     padding: 0px;
+    background-color: #FFF;
 }
 
 .toothless {
     font-family: 'Oswald', sans-serif;
-    font-size: 128px;
+    font-size: 64px;
     color: rgb(128,128,128);
+    margin-left: 16px;
 }
 
 .banner {
     width: 100%;
-    margin-top: 64px;
     text-align: center;
+    vertical-align: middle;
+    background: url("/img/banner.png");
+    background-size: cover;
+    padding-top: 64px;
+    padding-bottom: 64px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 48px;
+    color: white;
 }
 
 #logo {
-    height: 128px;
-    width: 128px;
+    height: 64px;
+    width: 64px;
+    position: relative;
+    transform: translateY(3px);
 }
