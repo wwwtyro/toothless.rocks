@@ -16,6 +16,13 @@ layout: default
         border-bottom: 1px solid #aaa;
     }
 
+    h2 {
+        margin-top: 32px;
+        background-color: #ddd;
+        padding: 0px 8px;
+        display: inline-block;
+    }
+
     h3 {
         margin-top: 32px;
     }
@@ -185,9 +192,22 @@ sudo docker push toothless/helloworld:latest
             <a href="http://localhost:9887/app?repo=toothless/helloworld" target="_blank">
                 http://localhost:9887/app?repo=toothless/helloworld</a>.
             Clicking this link will redirect the user to the Toothless server on their host, which will take over the launch 
-            of the application. See the application booting section for details on how that works.</p>
+            of the application.</p>
 
             <img src="img/hello-world.png" class="img-responsive img50p center-block mtop32">
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Application updates</h4>
+                <p>If an application has no running instances when it is launched, Toothless will always try to 
+                    pull the application image before launching it. This is done so that if you need to change the
+                    structure of stored data from one version of your application to the next, you will not need to
+                    be concerned that an incompatible instance is simultaneously accessing that data.</p>
+            </div>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Application updates</h4>
+                <p>Toothless will always pull the <code>:latest</code> version of your image. Versioning is not yet supported.</p>
+            </div>
 
             <!-- TUTORIAL 2 -->
             <h1>Tutorial #2: Firefox with X11 and PulseAudio support</h1>
@@ -261,9 +281,9 @@ sudo docker push toothless/firefox:latest
 
             <h1>Reference</h1>
 
-            <h3>Dockerfile</h3>
+            <h2>Dockerfile</h2>
 
-            <div class="env">ENV toothless=true</div>
+            <div class="env" style="margin-top:32px">ENV toothless=true</div>
 
             <p>
                 Indicates that this application is a Toothless app. Toothless will not launch images that do
@@ -335,7 +355,7 @@ sudo docker push toothless/firefox:latest
             </p>
 
             <div class="bs-callout bs-callout-info">
-                <h4>User required for X11 support</h4>
+                <h4>X11</h4>
                 <p>
                     Note that a user must be set and in use for X11 support to work. See Tutorial #2 for an example.
                 </p>
@@ -347,16 +367,34 @@ sudo docker push toothless/firefox:latest
             </p>
 
             <div class="bs-callout bs-callout-info">
-                <h4>PulseAudio package required</h4>
+                <h4>PulseAudio</h4>
                 <p>
                     Be sure to install the <code>pulseaudio</code> package in your container, or this may not work.
                     See Tutorial #2 for an example.
                 </p>
             </div>
 
-            <h3>App Booting Process</h3>
+            <h2>Toothless URLs</h2>
 
-            <h3>Toothless URLs</h3>
+            <p>Links for launching Toothless applications are of the form <code>http://localhost:9887/app?repo=application/name</code>
+                where <code>application/name</code> is the name of your image on Docker Hub, e.g., <code>toothless/helloworld</code>.
+
+            <h2>Data storage</h2>
+            <p>Every application is given access to two persistent data stores. The application-specific data should be
+                stored in <code>/toothless/local</code>, while data to be shared with other Toothless applications should
+                be written to <code>/toothless/shared</code>. These two paths can be found on the host in 
+                <code>/opt/toothless/app-data/[application-name]</code> and <code>/opt/toothless/app-data/shared</code>.
+                Note that while other Toothless applications do not have access to application-specific data, the user
+                can read and write this data at any time, whether your application is running or not.</p>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Persistent data</h4>
+                <p>
+                    Containers are discarded after they exit, so any data written anywhere other than <code>/toothless/local</code>
+                    or <code>/toothless/shared</code> will be lost. Do not store important data elsewhere!
+                </p>
+            </div>
+
 
         </div>
 
