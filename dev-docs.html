@@ -37,6 +37,17 @@ layout: default
         width: 50%;
     }
 
+    .env {
+        font-family: 'Ubuntu Mono';
+        color: #777;
+        /*background: #eed;*/
+        border-left: 4px solid #777;
+        padding-left: 4px;
+        padding: 0px 4px;
+        font-size: 20px;
+        margin-top: 64px;
+    }
+
 </style>
 
 <div class="container">
@@ -45,6 +56,7 @@ layout: default
 
         <div class="col-md-12">
 
+            <!-- TUTORIAL 1 -->
             <h1>Tutorial #1: Hello World!</h1>
 
             <p>We'll start off with a simple Python web server that echos "Hello World!" to
@@ -181,6 +193,7 @@ sudo docker push toothless/helloworld:latest
 
             <img src="img/hello-world.png" class="img-responsive img50p center-block mtop32">
 
+            <!-- TUTORIAL 2 -->
             <h1>Tutorial #2: Firefox with X11 and PulseAudio support</h1>
 
             <p>This tutorial will demonstrate how to set up a typical desktop application with X11 and Pulseaudio support by
@@ -248,6 +261,107 @@ sudo docker push toothless/firefox:latest
 
             <img src="img/ffox.png" class="img-responsive img50p center-block mtop32">
 
+            <!-- REFERENCE -->
+
+            <h1>Reference</h1>
+
+            <h3>Dockerfile</h3>
+
+            <div class="env">ENV toothless=true</div>
+
+            <p>
+                Indicates that this application is a Toothless app. Toothless will not launch images that do
+                not have this set to true.
+            </p>
+
+            <div class="env">ENV toothless_singleton=true/false</div>
+
+            <p>
+                If true, Toothless will not launch a new instance of this application if one is already running.
+                Use in conjunction with <code>toothless_redirect_endpoint/port</code> to build a standard webapp
+                with a clientside server.
+            </p>
+
+            <div class="env">
+                ENV toothless_ready_endpoint=string<br>
+                ENV toothless_ready_port=integer
+            </div>
+
+            <p>
+                If these values are set, Toothless will continuously hit the endpoint defined by <code>toothless_ready_endpoint/port</code>,
+                waiting for a status 200  before redirecting to <code>toothless_redirect_endpoint/port</code> or 
+                indicating that the app has been launched (see <code>toothless_indicate_ready</code>). If these values are not set,
+                the app will be considered ready immediately after the container starts.
+            </p>
+
+            <p>Example:</p>
+            <p>
+                <code>ENV toothless_ready_endpoint=/_toothless/ready</code><br>
+                <code>ENV toothless_ready_port=8080</code>
+            </p>
+            <p>Toothless would check <code>http://localhost:8080/_toothless/ready</code> in the container.</p>
+
+            <div class="env">
+                ENV toothless_redirect_endpoint=string<br>
+                ENV toothless_redirect_port=integer
+            </div>
+            <p>
+                If these values are set, Toothless will redirect the user's browser to the indicated endpoint after the application
+                has been determined to be ready.
+            </p>
+
+            <p>Example:</p>
+            <p>
+                <code>ENV toothless_redirect_endpoint=/index.html</code><br>
+                <code>ENV toothless_redirect_port=8080</code>
+            </p>
+            <p>Toothless would redirect the user to <code>http://localhost:8080/index.html</code> in the container.</p>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Port publishing</h4>
+                <p>
+                    The port that the user is redirected to is not actually the one supplied; Toothless publishes the provided
+                    port to a random one on the host, and redirects there.
+                </p>
+            </div>
+
+
+            <div class="env">ENV toothless_indicate_ready=integer</div>
+            <p>
+                If this is set and the user has not been redirected via <code>toothless_redirect_endpoint/port</code>, the booting page
+                will display a message indicating that the application has been started. This can be used for background services that
+                do not have a user-facing webpage.
+            </p>
+
+            <div class="env">ENV toothless_X11=true/false</div>
+            <p>
+                If this is set to true, X11 support will be enabled for the application.
+            </p>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>User required for X11 support</h4>
+                <p>
+                    Note that a user must be set and in use for X11 support to work. See Tutorial #2 for an example.
+                </p>
+            </div>
+
+            <div class="env">ENV toothless_PULSEAUDIO=true/false</div>
+            <p>
+                If set to true, PulseAudio support will be enabled for the application.                
+            </p>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>PulseAudio package required</h4>
+                <p>
+                    Be sure to install the <code>pulseaudio</code> package in your container, or this may not work.
+                    See Tutorial #2 for an example.
+                </p>
+            </div>
+
+<!--             <h3>App Booting Process</h3>
+
+            <h3>Toothless URLs</h3>
+ -->
         </div>
 
     </div>

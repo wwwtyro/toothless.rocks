@@ -23,6 +23,6 @@ code {
     font-family: 'Ubuntu Mono';
     white-space: nowrap;
     color: #08F;
-    background-color: #fff;
+    background-color: rgba(0,0,0,0);
     padding: 0px;
 }
