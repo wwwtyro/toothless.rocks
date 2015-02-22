@@ -2,5 +2,4 @@ title: "Toothless"
 description: "A service for launching container applications seamlessly from the browser."
 baseurl: ""
 url: "http://toothless.rocks"
-markdown: kramdown
-permalink: pretty
+# permalink: pretty

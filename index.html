@@ -2,21 +2,107 @@
 layout: default
 ---
 
-<div class="toothless-container">
-    <span class="toothless">TOOTHLESS</span><canvas class="logo" id="logo"></canvas>
-</div>
+{% include header.html %}
 
-<div class="banner">
+<!-- CSS ################################################################################### -->
+
+<style>
+
+    body {
+        font-size: 20px;
+    }
+
+    .banner {
+        width: 100%;
+        text-align: center;
+        vertical-align: middle;
+        padding-top: 128px;
+        padding-bottom: 128px;
+        font-size: 48px;
+    }
+
+    .banner-text {
+        width: 50%; 
+        position: relative; 
+        left: 25%;
+    }
+
+    .bgdark {
+        background: url("/img/bg.png");
+        background-size: cover;
+        color: white;
+        text-shadow: 0px 2px 8px #555;
+    }
+
+    .bglight {
+        background: url("/img/bg-light.png");
+        background-size: cover;
+    }
+
+    .highlight {
+        background: url("/img/bg-light.png");
+        background-size: cover;
+        margin-top: 64px;
+    }
+
+    .bigpad {
+        padding: 192px 0px;
+    }
+
+    .mtop64 {
+        margin-top: 64px;
+    }
+
+    .font4vw {
+        font-size: 4vw;
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .get-started {
+        font-size: 5vw;
+        padding: 16px 32px;
+        font-weight: 400;
+        white-space: nowrap;
+        color: white;
+    }
+
+    .get-started:hover {
+        text-decoration: none;
+        color: white;
+    }
+
+    h1 {
+        margin-top: 64px;
+    }
+
+    p {
+        margin-top: 32px;
+    }
+
+</style>
+
+<!-- HTML ################################################################################## -->
+
+<!-- Banner -->
+<div class="banner bgdark">
     
-    <div style="width: 50%; position: relative; left: 25%">
+    <div class="banner-text">
+
         Run sandboxed, native applications from your browser with the click of a link.
+
     </div>
 
 </div>
 
+<!-- Quick & Easy -->
 <div class="container">
 
-    <h1>Quick & Easy</h1>
+    <h1>
+        Quick & Easy
+    </h1>
 
     <p>Click on a link, and Toothless will download, install, and start an application for you. 
     With Toothless apps, there's no need to manually go through this rigmarole any longer.</p>
@@ -41,13 +127,13 @@ layout: default
     
         <div class="col-md-6">
     
-            <img src="/img/click.png" class="img-responsive center-block img-step">
+            <img src="/img/click.png" class="img-responsive center-block">
 
         </div>
 
         <div class="col-md-6">
 
-            <img src="/img/gimp.png" class="img-responsive center-block img-step">
+            <img src="/img/gimp.png" class="img-responsive center-block">
 
         </div>
     
@@ -55,24 +141,27 @@ layout: default
 
 </div>
 
-<br><br><br>
-
+<!-- More Secure -->
 <div class="container-fluid highlight">
+
     <div class="row">
+
         <div class="container">
 
             <h1>More Secure</h1>
 
             <p>Toothless runs applications in Docker containers, which separate them from the rest of your
-            operating system. This means you can worry less about trusting your applications, and spend
+            operating system. This means you can worry less about trusting your applications and spend
             more time using them.</p>
 
             <img src="/img/docker.png" class="img-responsive center-block">
 
         </div>
+
     </div>
 </div>
 
+<!-- Full Control -->
 <div class="container">
 
     <h1>Full Control</h1>
@@ -82,21 +171,25 @@ layout: default
 
     <br>
 
-    <img src="/img/control-panel.png" class="img-responsive center-block">
+    <img src="/img/control-panel.png" class="img-responsive center-block img-shadow">
 
 </div>
 
-<br><br><br>
+<!-- Get Started -->
+<div class="container-fluid center bigpad bgdark mtop64">
 
-<div class="container-fluid highlight center bigpad">
     <div class="row">
-        <div class="container">
-            <a href="#" class="btn btn-primary btn-huge">
-                Get started now!
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            </a>
-        </div>
+
+        <a href="/user-docs.html" class="get-started">
+
+            Get started now!
+
+            <span class="glyphicon glyphicon-chevron-right font4vw"></span>
+
+        </a>
+
     </div>
+
 </div>
 
 

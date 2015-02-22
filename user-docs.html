@@ -1,0 +1,165 @@
+---
+layout: default
+---
+
+{% include header.html %}
+
+<style>
+
+    body {
+        font-size: 16px;
+    }
+
+    h1 {
+        margin-top: 96px;
+        margin-bottom: 32px;
+        border-bottom: 1px solid #aaa;
+        /*font-weight: bold;*/
+    }
+
+    h3 {
+        /*font-weight: bold;*/
+    }
+
+    p {
+        margin-top: 16px;
+    }
+
+    li {
+        margin-top: 16px;
+    }
+
+</style>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h1 class="mtop64">
+                Installation
+            </h1>
+
+            <div role="tabpanel">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="install-ubuntu" class="active">
+                        <a href="#install-ubuntu" aria-controls="install-ubuntu" role="tab" data-toggle="tab">Ubuntu</a>
+                    </li>
+                    <li role="install-mac">
+                            <a href="#install-mac" aria-controls="install-mac" role="tab" data-toggle="tab">Mac OS/X</a>
+                    </li>
+                    <li role="install-windows">
+                            <a href="#install-windows" aria-controls="install-windows" role="tab" data-toggle="tab">Windows</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="install-ubuntu">
+                        <p class="mtop32">The easiest way to install Toothless is to run the install script in a terminal:</p>
+
+                        <pre>$ wget --quiet -O - https://raw.githubusercontent.com/wwwtyro/toothless/master/install.sh | sudo sh</pre>
+
+                        <p class="mtop32">If you'd like to do this manually yourself, follow the steps in the
+                        <a href="https://github.com/wwwtyro/toothless/blob/master/install.sh">installation script</a>.</p>
+
+                        <h3>
+                            Get audio working in Ubuntu Linux
+                        </h3>
+
+                        <p>Audio for X11 apps may not work out of the box on Ubuntu. To get it working, open the
+                        <code>paprefs</code> application (installed as a dependency of Toothless), click the 
+                        <code>Network Server</code> tab, and enable <code>Enable network access to local sound devices</code>.</p>
+
+                        <div style="margin-top: 32px">
+                            <img src="/img/paprefs.png" class="img-responsive center-block">
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="install-mac">
+                        <p class="mtop32">Not currently available, but plans are being fleshed out for support through a virtual machine.</p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="install-windows">
+                        <p class="mtop32">Not currently available, but plans are being fleshed out for support through a virtual machine.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <h1>Launching an application</h1>
+
+            <p>Launching an application with Toothless is as simple as clicking a link. After you've got it installed, click 
+            <a href="http://localhost:9887/app?repo=toothless/gimp" target="_blank">this link</a> to launch the Gimp image editor, for example.
+            The first time you launch an application, it will need to download and install the app. Later launches of the
+            same application will be speedier.</p>
+
+            <h1>Using the control panel</h1>
+
+            <p>Toothless comes with a control panel that you can use by going to 
+            <a href="http://localhost:9887" target="_blank">http://locahost:9887</a> in your browser. You can use this control panel to
+            install, uninstall, start, and stop applications.</p>
+
+            <img src="/img/schematic-installed.svg" class="img-responsive img-shadow mtop32">
+
+            <ol class="mtop32">
+            
+                <li>The quicklaunch bar can be used to install and launch an application directly from the control panel. Type the name
+                    of the application repository into the bar and hit enter. If the application is not yet installed, it will be installed
+                    before launching it.</li>
+                <li>The installed apps tab displays the applications that are currently installed.</li>
+                <li>App launch links will launch an application when clicked.</li>
+                <li>Uninstall app buttons will uninstall an application and all of its associated data.</li>
+
+            </ol>
+
+            <img src="/img/schematic-running.svg" class="img-responsive img-shadow mtop32">
+
+            <ol start="5" class="mtop32">
+            
+                <li>The running apps tab displays the applications that are currently running.</li>
+                <li>App stop buttons will attempt to shut down an application gracefully.</li>
+                <li>App kill buttons will immediately stop an application, with a risk of data loss.</li>
+
+            </ol>
+
+            <h1 class="mtop64">
+                Application file access
+            </h1>
+
+            <div role="tabpanel">
+
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="file-ubuntu" class="active">
+                        <a href="#file-ubuntu" aria-controls="file-ubuntu" role="tab" data-toggle="tab">Ubuntu</a>
+                    </li>
+                    <li role="file-mac">
+                            <a href="#file-mac" aria-controls="file-mac" role="tab" data-toggle="tab">Mac OS/X</a>
+                    </li>
+                    <li role="file-windows">
+                            <a href="#file-windows" aria-controls="file-windows" role="tab" data-toggle="tab">Windows</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="file-ubuntu">
+
+                        <p>Files are located in the <code>/opt/toothless/app-data</code> directory. There you'll find a directory
+                        for each application, as well as a <code>shared</code> path for data that is to be shared between applications.</p>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="file-mac">
+                        <p class="mtop32">Not currently available, but plans are being fleshed out for support through a virtual machine.</p>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="file-windows">
+                        <p class="mtop32">Not currently available, but plans are being fleshed out for support through a virtual machine.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
