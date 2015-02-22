@@ -62,21 +62,31 @@ layout: default
             <!-- Overview -->
             <h1>Developer Overview</h1>
 
-            <p>Toothless gives native app developers what web developers have had for years: a user-friendly distribution
-            system. Create a Docker container with your application, make it compatible with Toothless with a few lines
-            in your Dockerfile, and push it to Docker Hub. Distributing your application is now as simple as posting a link.</p>
+            <p>
+                Toothless gives native app developers what web developers have had for years: a user-friendly distribution system. Create a Docker container with your application, make it compatible with Toothless with a few lines in your Dockerfile, and push it to Docker Hub. Distributing your application is now as simple as posting a link.
+            </p>
+
+            <div class="center">
+                <iframe src="https://ghbtns.com/github-btn.html?user=wwwtyro&repo=toothless&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+            </div>
 
             <!-- TUTORIAL 1 -->
             <h1>Tutorial #1: Hello World!</h1>
 
-            <p>We'll start off with a simple Python web server that echos "Hello World!" to
-            the browser.</p>
+            <p>We'll start off with a simple Python web server that echos "Hello World!" to the browser.</p>
+
+            <div class="bs-callout bs-callout-warning">
+                <h4>Prerequisite: Install Docker</h4>
+                <p>
+                    You'll need to <a href="https://docs.docker.com/installation/">install Docker</a> to complete these tutorials. The recommended version is currently 1.5.0.
+                </p>
+            </div>
 
             <div class="bs-callout bs-callout-warning">
                 <h4>Prerequisite: Docker Hub account</h4>
-                <p>To fully complete this tutorial, you'll need a <a href="https://hub.docker.com/">Docker Hub</a> account. 
-                    The image name <code>toothless/helloworld</code> will not be available to you; you'll need to use 
-                    <code>[your docker hub account name]/helloworld.</code></p>
+                <p>
+                    To fully complete these tutorials, you'll need a <a href="https://hub.docker.com/">Docker Hub</a> account. The image name <code>toothless/helloworld</code> will not be available to you; you'll need to use <code>[your docker hub account name]/helloworld.</code>
+                </p>
             </div>
 
             <h3>Build the server</h3>
@@ -222,12 +232,6 @@ sudo docker push toothless/helloworld:latest
             <p>This tutorial will demonstrate how to set up a typical desktop application with X11 and Pulseaudio support by
             launching an instance of Firefox and opening a music video on YouTube.</p>
 
-            <div class="bs-callout bs-callout-info">
-                <h4>Firefox in Docker containers</h4>
-                <p>If Firefox is already running on the host, the process will be run on the host, not in the container! To test
-                this tutorial properly, shut down Firefox before launching the application.</p>
-            </div>
-
             <p>All we'll need for this application is a Dockerfile:</p>
 
 <pre class="prettyprint lang-bash">
@@ -254,8 +258,8 @@ ENV toothless_PULSEAUDIO=true
 # When the container launches, switch to the toothless user.
 USER toothless
 
-# Launch Firefox and open a music video.
-CMD firefox https://www.youtube.com/watch?v=yqckaTq9oW8 
+# Launch a new instance Firefox and open a music video.
+CMD firefox -new-instance https://www.youtube.com/watch?v=yqckaTq9oW8 
 </pre>
 
             <p>The remaining steps are nearly identical to the Hello World! example. Start by setting up 
