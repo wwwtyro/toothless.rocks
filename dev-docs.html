@@ -1,0 +1,174 @@
+---
+layout: default
+---
+
+{% include header.html %}
+
+<style>
+
+    body {
+        font-size: 16px;
+    }
+
+    h1 {
+        margin-top: 96px;
+        margin-bottom: 32px;
+        border-bottom: 1px solid #aaa;
+    }
+
+    h3 {
+        margin-top: 32px;
+    }
+
+    p {
+        margin-top: 16px;
+    }
+
+    pre {
+        margin-top: 16px;
+        font-size: 16px;
+    }
+
+    code {
+        font-size: 18px;
+    }
+
+</style>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <h1>Tutorial #1: Hello World!</h1>
+
+            <p>We'll start off with a simple Python web server that echos "Hello World!" to
+            the browser.</p>
+
+            <h3>Build the server</h3>
+            Here's the code for the web server, <code>app.py</code>:
+
+<pre class="prettyprint lang-python">
+#!/usr/bin/env python
+
+from bottle import route, run
+
+# Simulate slow startup.
+import time
+time.sleep(5);
+
+@route('/')
+def hello():
+    return "Hello World!"
+
+run(host='0.0.0.0', port=8080)
+</pre>            
+
+            <p>We're serving "Hello World!" on port 8080. Before we start listening, we add a pause of 5 seconds to simulate
+            work the server needs to do before it can start responding to requests.</p>
+
+            <h3>Create the Dockerfile</h3>
+
+            <p>Next we'll create a <a href="https://docs.docker.com/reference/builder/">Dockerfile</a> for our app:</p>
+
+<pre class="prettyprint lang-bash">
+# Use the python base image
+FROM ubuntu 
+
+# Install Python and the bottle webserver.
+RUN apt-get update && apt-get install -y python
+RUN apt-get update && apt-get install -y python-bottle
+
+# Copy our application into /app in the container.
+ADD app /app
+
+# Expose port 8080. Toothless will automatically publish
+# this port to a random port on the host.
+EXPOSE 8080
+
+# Indicate that this is a toothless app.
+ENV toothless=true
+
+# We want only one instance of this app running at any given time.
+ENV toothless_singleton=true
+
+# Provide an endpoint for Toothless to check to see if the app is ready.
+ENV toothless_ready_port=8080
+ENV toothless_ready_endpoint=/
+
+# Tell Toothless where to redirect the user when they go to the app.
+ENV toothless_redirect_port=8080
+ENV toothless_redirect_endpoint=/
+
+# When our app starts up, go to the /app directory and run ./app.py
+WORKDIR /app
+CMD ./app.py
+</pre>
+
+            
+            <div class="bs-callout bs-callout-info">
+                <h4>ENV</h4>
+                <p>Toothless uses Dockerfile <code>ENV</code> environment variables to define the behavior of an app.</p>
+            </div>
+
+            <p>When the user attempts to launch our app, Toothless will check to see if the app is already running, and if so,
+            redirect to it. If the app is not yet running, the user will be redirected to a booting page that will tell them
+            the status of the booting process. Once the container is running, Toothless will continuously hit the endpoint
+            defined by <code>toothless_ready_endpoint</code> and <code>toothless_ready_port</code>. Once this endpoint returns
+            a status 200, the user will be redirected to the endpoint defined by <code>toothless_redirect_endpoint</code> and 
+            <code>toothless_redirect_port</code>.
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Singletons</h4>
+                <p>A singleton is an application that is limited to a single instance. This is useful for clientside webservers
+                or other applications where the developer does not want multiple simultaneous instances. Normal desktop applications
+                would not use this feature. The singleton state is enabled with the <code>ENV toothless_singleton=true</code> 
+                Dockerfile environment variable definition.</p>
+            </div>
+
+            <h3>Project organization</h3>
+
+            <p>Let's put these files into their own directory, organized thus:</p>
+
+<pre>
+toothless-helloworld/
+├── app
+│   └── app.py
+└── Dockerfile
+</pre>            
+
+            <h3>Build and push our application</h3>
+
+            <p>Next we'll <a href="https://docs.docker.com/reference/commandline/cli/#build">build</a> our application image.</p>
+
+<pre class="prettyprint lang-bash">
+sudo docker build -t toothless/helloworld:latest .
+</pre>
+
+            <p>Be sure to check out the documentation on <a href="https://docs.docker.com/reference/commandline/cli/#build">docker build</a>
+            so that you understand what is going on with the image tagging here. You won't be able to use toothless/helloworld.</p>
+
+            <p>Finally, let's <a href="https://docs.docker.com/reference/commandline/cli/#push">push</a>
+            it to <a href="https://hub.docker.com/">Docker Hub</a> (you'll need an account there if you don't already have one):</p>
+
+<pre class="prettyprint lang-bash">
+sudo docker push toothless/helloworld:latest
+</pre>            
+
+            <h3>App launch</h3>
+
+            <p>The user can launch the app by clicking a link. Here's what that link looks like for this app: 
+            <code>http://localhost:9887/app?repo=toothless/helloworld</code>. Clicking this link will redirect the user
+            to the Toothless server on their host, which will take over the launch of the application. See the application
+            booting section for details on how that works.</p>
+
+<!--             <h1>Tutorial #2: Firefox with X11 and PulseAudio support</h1>
+
+            <p>This tutorial will demonstrate how to set up a typical desktop application with X11 and Pulseaudio support
+ -->
+        </div>
+
+    </div>
+
+</div>

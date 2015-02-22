@@ -14,3 +14,15 @@ body {
 .mtop32 {
     margin-top: 32px;
 }
+
+pre {
+    font-family: 'Ubuntu Mono';
+}
+
+code {
+    font-family: 'Ubuntu Mono';
+    white-space: nowrap;
+    color: #08F;
+    background-color: #fff;
+    padding: 0px;
+}
