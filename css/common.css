@@ -1,18 +1,23 @@
 body {
     margin: 0px;
     padding: 0px;
-    padding-bottom: 256px;
+    padding-bottom: 128px;
     background-color: #FFF;
     font-family: 'Open Sans', sans-serif;
 }
 
 .img-shadow {
     padding: 16px; 
-    box-shadow: 0px 0px 16px #ccc;
+    box-shadow: 0px 0px 16px #888;
+    background: white;
 }
 
 .mtop32 {
     margin-top: 32px;
+}
+
+.mtop128 {
+    margin-top: 128px;
 }
 
 pre {
@@ -25,4 +30,17 @@ code {
     color: #08F;
     background-color: rgba(0,0,0,0);
     padding: 0px;
+}
+
+.img50p {
+    width: 50%;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
 }
