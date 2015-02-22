@@ -33,6 +33,10 @@ layout: default
         font-size: 18px;
     }
 
+    .img50p {
+        width: 50%;
+    }
+
 </style>
 
 <div class="container">
@@ -45,6 +49,13 @@ layout: default
 
             <p>We'll start off with a simple Python web server that echos "Hello World!" to
             the browser.</p>
+
+            <div class="bs-callout bs-callout-warning">
+                <h4>Prerequisite: Docker Hub account</h4>
+                <p>To fully complete this tutorial, you'll need a <a href="https://hub.docker.com/">Docker Hub</a> account. 
+                    The image name <code>toothless/helloworld</code> will not be available to you; you'll need to use 
+                    <code>[your docker hub account name]/helloworld.</code></p>
+            </div>
 
             <h3>Build the server</h3>
             Here's the code for the web server, <code>app.py</code>:
@@ -108,16 +119,9 @@ CMD ./app.py
 
             
             <div class="bs-callout bs-callout-info">
-                <h4>ENV</h4>
+                <h4>Dockerfile ENV</h4>
                 <p>Toothless uses Dockerfile <code>ENV</code> environment variables to define the behavior of an app.</p>
             </div>
-
-            <p>When the user attempts to launch our app, Toothless will check to see if the app is already running, and if so,
-            redirect to it. If the app is not yet running, the user will be redirected to a booting page that will tell them
-            the status of the booting process. Once the container is running, Toothless will continuously hit the endpoint
-            defined by <code>toothless_ready_endpoint</code> and <code>toothless_ready_port</code>. Once this endpoint returns
-            a status 200, the user will be redirected to the endpoint defined by <code>toothless_redirect_endpoint</code> and 
-            <code>toothless_redirect_port</code>.
 
             <div class="bs-callout bs-callout-info">
                 <h4>Singletons</h4>
@@ -125,6 +129,14 @@ CMD ./app.py
                 or other applications where the developer does not want multiple simultaneous instances. Normal desktop applications
                 would not use this feature. The singleton state is enabled with the <code>ENV toothless_singleton=true</code> 
                 Dockerfile environment variable definition.</p>
+            </div>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Toothless Ready & Redirect</h4>
+                <p>Immediately after an application container has been started, Toothless will continuously hit the endpoint defined by 
+                <code>toothless_ready_endpoint</code> and <code>toothless_ready_port</code>, if they are defined. Once this 
+                endpoint returns a status 200, the user will be redirected to the endpoint defined by 
+                <code>toothless_redirect_endpoint</code> and <code>toothless_redirect_port</code>, if they are defined.
             </div>
 
             <h3>Project organization</h3>
@@ -140,17 +152,20 @@ toothless-helloworld/
 
             <h3>Build and push our application</h3>
 
-            <p>Next we'll <a href="https://docs.docker.com/reference/commandline/cli/#build">build</a> our application image.</p>
+            <p>Next we'll <a href="https://docs.docker.com/reference/commandline/cli/#build">build</a> our application image:</p>
 
 <pre class="prettyprint lang-bash">
 sudo docker build -t toothless/helloworld:latest .
 </pre>
 
-            <p>Be sure to check out the documentation on <a href="https://docs.docker.com/reference/commandline/cli/#build">docker build</a>
-            so that you understand what is going on with the image tagging here. You won't be able to use toothless/helloworld.</p>
+            <div class="bs-callout bs-callout-info">
+                <h4>Docker Build</h4>
+                <p>Be sure to check out the documentation on <a href="https://docs.docker.com/reference/commandline/cli/#build">docker build</a>
+                so that you understand what is going on with the image tagging here. You won't be able to use toothless/helloworld.</p>
+            </div>
 
             <p>Finally, let's <a href="https://docs.docker.com/reference/commandline/cli/#push">push</a>
-            it to <a href="https://hub.docker.com/">Docker Hub</a> (you'll need an account there if you don't already have one):</p>
+            it to Docker Hub (you'll need an account there if you don't already have one):</p>
 
 <pre class="prettyprint lang-bash">
 sudo docker push toothless/helloworld:latest
@@ -159,14 +174,80 @@ sudo docker push toothless/helloworld:latest
             <h3>App launch</h3>
 
             <p>The user can launch the app by clicking a link. Here's what that link looks like for this app: 
-            <code>http://localhost:9887/app?repo=toothless/helloworld</code>. Clicking this link will redirect the user
-            to the Toothless server on their host, which will take over the launch of the application. See the application
-            booting section for details on how that works.</p>
+            <a href="http://localhost:9887/app?repo=toothless/helloworld" target="_blank">
+                http://localhost:9887/app?repo=toothless/helloworld</a>.
+            Clicking this link will redirect the user to the Toothless server on their host, which will take over the launch 
+            of the application. See the application booting section for details on how that works.</p>
 
-<!--             <h1>Tutorial #2: Firefox with X11 and PulseAudio support</h1>
+            <img src="img/hello-world.png" class="img-responsive img50p center-block mtop32">
 
-            <p>This tutorial will demonstrate how to set up a typical desktop application with X11 and Pulseaudio support
- -->
+            <h1>Tutorial #2: Firefox with X11 and PulseAudio support</h1>
+
+            <p>This tutorial will demonstrate how to set up a typical desktop application with X11 and Pulseaudio support by
+            launching an instance of Firefox and opening a music video on YouTube.</p>
+
+            <div class="bs-callout bs-callout-info">
+                <h4>Firefox in Docker containers</h4>
+                <p>If Firefox is already running on the host, the process will be run on the host, not in the container! To test
+                this tutorial properly, shut down Firefox before launching the application.</p>
+            </div>
+
+            <p>All we'll need for this application is a Dockerfile:</p>
+
+<pre class="prettyprint lang-bash">
+# Use the Ubuntu base image.
+FROM ubuntu
+
+# Install Firefox and PulseAudio
+RUN apt-get update && apt-get install -y firefox
+RUN apt-get update && apt-get install -y pulseaudio
+
+# We'll need a user for X11 support.
+RUN useradd -m toothless
+
+# Indicate that this is a toothless application.
+ENV toothless=true
+
+# More than one instance of this can be run at once.
+ENV toothless_singleton=false
+
+# Enable X11 and PulseAudio support.
+ENV toothless_X11=true
+ENV toothless_PULSEAUDIO=true
+
+# When the container launches, switch to the toothless user.
+USER toothless
+
+# Launch Firefox and open a music video.
+CMD firefox https://www.youtube.com/watch?v=yqckaTq9oW8 
+</pre>
+
+            <p>The remaining steps are nearly identical to the Hello World! example. Start by setting up 
+            the application directory thus:</p>
+
+<pre>
+toothless-firefox/
+└── Dockerfile
+</pre>
+
+            <p>Then build the image:</p>
+
+<pre class="prettyprint lang-bash">
+sudo docker build -t toothless/firefox:latest .
+</pre>
+
+            <p>And finally push the image:</p>
+
+<pre class="prettyprint lang-bash">
+sudo docker push toothless/firefox:latest            
+</pre>
+
+            <p>The application can be launched via the link
+            <a href="http://localhost:9887/app?repo=toothless/firefox" target="_blank">
+                http://localhost:9887/app?repo=toothless/firefox</a>.
+
+            <img src="img/ffox.png" class="img-responsive img50p center-block mtop32">
+
         </div>
 
     </div>
