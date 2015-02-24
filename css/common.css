@@ -12,8 +12,16 @@ body {
     background: white;
 }
 
+.mtop16 {
+    margin-top: 16px;
+}
+
 .mtop32 {
     margin-top: 32px;
+}
+
+.mtop64 {
+    margin-top: 64px;
 }
 
 .mtop128 {
