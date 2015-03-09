@@ -255,8 +255,8 @@ ENV toothless=true
 ENV toothless_singleton=false
 
 # Enable X11 and PulseAudio support.
-ENV toothless_X11=true
-ENV toothless_PULSEAUDIO=true
+ENV toothless_x11=true
+ENV toothless_pulseaudio=true
 
 # When the container launches, switch to the toothless user.
 USER toothless
@@ -363,7 +363,7 @@ sudo docker push toothless/firefox:latest
                 do not have a user-facing webpage.
             </p>
 
-            <div class="env">ENV toothless_X11=true/false</div>
+            <div class="env">ENV toothless_x11=true/false</div>
             <p>
                 If this is set to true, X11 support will be enabled for the application.
             </p>
@@ -375,7 +375,7 @@ sudo docker push toothless/firefox:latest
                 </p>
             </div>
 
-            <div class="env">ENV toothless_PULSEAUDIO=true/false</div>
+            <div class="env">ENV toothless_pulseaudio=true/false</div>
             <p>
                 If set to true, PulseAudio support will be enabled for the application.                
             </p>
